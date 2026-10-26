@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="fo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Aftur – keyp og sel brúkt í Føroyum</title>
+<meta name="description" content="Aftur er føroyska keypitorgið fyri brúktar vørur. Keyp og sel klæðir, barnating, heimating og meira.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: white header (logo · search · actions) + category bar → content (home hero + grid, item page 2-col, forms) → footer */
+:root{
+  --bg:#ffffff; --soft:#f4f6fa; --line:#e3e7ef; --ink:#121826; --muted:#5d6678;
+  --accent:#1c46a8; --accent-hover:#163a8c; --accent-soft:#e8eefb; --accent-ink:#ffffff;
+  --red:#d23c32; --green:#14804a; --green-soft:#e5f4ec;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,sans-serif;
+  --r:12px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+[hidden]{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+
+/* header */
+.hdr{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.hdr-top{display:flex;align-items:center;gap:16px;height:64px}
+.logo{font-family:var(--display);font-weight:800;font-size:27px;letter-spacing:-.03em;color:var(--accent);flex:none}
+.logo b{color:var(--red)}
+.search{flex:1;min-width:0;display:flex;align-items:center;background:var(--soft);border-radius:10px;height:42px;padding:0 12px;gap:8px}
+.search svg{width:18px;height:18px;flex:none;stroke:var(--muted)}
+.search input{flex:1;min-width:0;border:0;background:none;outline:none;height:100%}
+.hdr-actions{display:flex;align-items:center;gap:6px;flex:none}
+.icon-btn{position:relative;width:42px;height:42px;border-radius:10px;border:0;background:none;display:grid;place-items:center}
+.icon-btn:hover{background:var(--soft)}
+.icon-btn svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.icon-btn .n{position:absolute;top:4px;right:3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--red);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 18px;border-radius:10px;border:1px solid transparent;font-weight:600;white-space:nowrap}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-outline{background:var(--bg);border-color:var(--accent);color:var(--accent)}
+.btn-outline:hover{background:var(--accent-soft)}
+.btn-ghost{background:var(--bg);border-color:var(--line)}
+.btn-ghost:hover{background:var(--soft)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-block{width:100%;height:48px;font-size:16px}
+.btn[disabled]{opacity:.5;cursor:default}
+.cats{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;height:46px;align-items:center}
+.cats::-webkit-scrollbar{display:none}
+.cat{flex:none;height:34px;padding:0 12px;border:0;border-radius:8px;background:none;color:var(--muted);font-weight:600;font-size:14px;white-space:nowrap}
+.cat:hover{background:var(--soft);color:var(--ink)}
+.cat.on{background:var(--accent-soft);color:var(--accent)}
+@media (max-width:640px){
+  .hdr-top{flex-wrap:wrap;height:auto;padding-block:10px;gap:10px}
+  .search{order:3;flex-basis:100%}
+  .logo{flex:1}
+  .sell-txt{display:none}
+  .hdr-actions .btn{padding:0 12px}
+}
+
+/* hero */
+.hero{margin-top:20px;border-radius:18px;background:var(--accent);color:#fff;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);overflow:hidden}
+.hero-txt{padding:40px 40px 36px;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,4vw,44px);line-height:1.05;letter-spacing:-.02em;margin:0;text-wrap:balance}
+.hero p{margin:0;opacity:.88;max-width:40ch}
+.hero .btn-primary{background:#fff;color:var(--accent)}
+.hero .btn-primary:hover{background:var(--accent-soft)}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+.hero .btn-outline{background:transparent;border-color:rgba(255,255,255,.6);color:#fff}
+.hero .btn-outline:hover{background:rgba(255,255,255,.1)}
+.hero-art{display:flex;gap:12px;padding:28px 28px 0;align-items:flex-end}
+.hero-art div{flex:1;border-radius:14px 14px 0 0;background-size:cover;background-position:center;box-shadow:0 -4px 20px rgba(0,0,0,.15)}
+.hero-art div:nth-child(1){height:200px}.hero-art div:nth-child(2){height:270px}.hero-art div:nth-child(3){height:230px}
+.trust{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;opacity:.9}
+.trust span{display:flex;align-items:center;gap:6px}
+.trust svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.hero-txt{padding:26px 22px 22px}.hero-art{display:none}}
+
+/* feed */
+.feed-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:30px 0 14px}
+h2{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.01em;margin:0}
+.count{color:var(--muted);font-size:14px;font-weight:500;margin-left:8px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.sel{height:38px;border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:0 10px;font-size:14px;max-width:100%}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px 16px}
+@media (max-width:1100px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:820px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}}
+.card{display:flex;flex-direction:column;gap:6px;min-width:0}
+.card .ph{position:relative;aspect-ratio:3/4;border-radius:var(--r);overflow:hidden;background:var(--soft)}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.card:hover .ph img{transform:scale(1.03)}
+.fav{position:absolute;right:8px;bottom:8px;height:30px;padding:0 9px;border-radius:15px;border:0;background:rgba(255,255,255,.95);display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.fav svg{width:16px;height:16px;stroke:var(--ink);fill:none;stroke-width:2}
+.fav.on svg{stroke:var(--red);fill:var(--red)}
+.tagpill{position:absolute;left:8px;top:8px;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--ink);color:#fff}
+.card .brand{font-size:13px;font-weight:600;color:var(--muted);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.card .t{font-size:14px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.card .p{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums}
+.card .pp{font-size:12.5px;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:4px}
+.card .pp svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.2}
+.empty{text-align:center;padding:60px 16px;color:var(--muted)}
+.empty strong{display:block;color:var(--ink);font-family:var(--display);font-size:20px;margin-bottom:6px}
+.empty .btn{margin-top:16px}
+
+/* item page */
+.crumbs{font-size:13px;color:var(--muted);margin:18px 0 14px;display:flex;gap:6px;flex-wrap:wrap}
+.crumbs a:hover{color:var(--accent)}
+.item{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,1fr);gap:32px;align-items:start}
+@media (max-width:820px){.item{grid-template-columns:1fr;gap:20px}}
+.gallery{display:grid;gap:8px}
+.gallery .main{aspect-ratio:4/5;max-height:640px;width:100%;border-radius:var(--r);overflow:hidden;background:var(--soft)}
+.gallery .main img{width:100%;height:100%;object-fit:contain}
+.thumbs{display:flex;gap:8px;overflow-x:auto}
+.thumbs button{flex:none;width:68px;height:84px;border-radius:8px;overflow:hidden;border:2px solid transparent;padding:0;background:var(--soft)}
+.thumbs button.on{border-color:var(--accent)}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.panel{position:sticky;top:130px;display:flex;flex-direction:column;gap:16px;border:1px solid var(--line);border-radius:16px;padding:22px}
+@media (max-width:820px){.panel{position:static}}
+.panel .price{font-family:var(--display);font-weight:800;font-size:32px;line-height:1;font-variant-numeric:tabular-nums}
+.panel .withfee{font-size:14px;color:var(--accent);font-weight:600;margin-top:6px;display:flex;gap:6px;align-items:center}
+.panel .withfee svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2}
+.panel h1{font-size:20px;margin:0;font-weight:700;line-height:1.3;text-wrap:balance}
+.specs{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0;font-size:14px}
+.specs dt{color:var(--muted)}
+.specs dd{margin:0;font-weight:500}
+.desc{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14.5px}
+.seller{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--line)}
+.avatar{width:44px;height:44px;border-radius:22px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700;flex:none}
+.seller .nm{font-weight:600}
+.seller .sub{font-size:13px;color:var(--muted)}
+.note{border-radius:10px;padding:12px 14px;font-size:14px;background:var(--soft)}
+.note.green{background:var(--green-soft);color:var(--green)}
+.note.blue{background:var(--accent-soft);color:var(--accent)}
+.protect{display:flex;gap:10px;font-size:13px;color:var(--muted);align-items:flex-start}
+.protect svg{width:20px;height:20px;flex:none;stroke:var(--accent);fill:none;stroke-width:2}
+.more{margin-top:44px}
+
+/* forms */
+.page{max-width:720px;margin:24px auto 0}
+.page h1{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:-.02em;margin:0 0 20px}
+.box{border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:16px;margin-bottom:16px}
+.box h3{margin:0;font-size:16px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{font-weight:600;font-size:14px}
+.field .hint{font-size:13px;color:var(--muted)}
+.field .err{font-size:13px;color:var(--red);font-weight:600}
+.inp{width:100%;height:44px;border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:0 12px}
+textarea.inp{height:auto;min-height:110px;padding:10px 12px;resize:vertical}
+.inp:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:520px){.two{grid-template-columns:1fr}}
+.photos{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+@media (max-width:520px){.photos{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.photos .ph{position:relative;aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:var(--soft)}
+.photos .ph img{width:100%;height:100%;object-fit:cover}
+.photos .x{position:absolute;top:5px;right:5px;width:26px;height:26px;border-radius:13px;border:0;background:rgba(255,255,255,.95);font-weight:700}
+.photos .first{position:absolute;left:5px;bottom:5px;font-size:11px;font-weight:700;background:var(--ink);color:#fff;padding:1px 6px;border-radius:5px}
+.addph{aspect-ratio:3/4;border:2px dashed var(--line);border-radius:10px;background:var(--bg);color:var(--accent);font-weight:600;font-size:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.addph svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.8}
+.addph:hover{background:var(--accent-soft)}
+
+/* checkout */
+.co{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,1fr);gap:24px;align-items:start;max-width:1000px;margin:24px auto 0}
+@media (max-width:820px){.co{grid-template-columns:1fr}}
+.co h1{grid-column:1/-1;font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:-.02em;margin:0}
+.mini{display:flex;gap:14px;align-items:center}
+.mini img{width:64px;height:80px;border-radius:8px;object-fit:cover;flex:none;background:var(--soft)}
+.mini .t{font-weight:600}
+.mini .s{font-size:13px;color:var(--muted)}
+.opt{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:14px;cursor:pointer}
+.opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.opt input{accent-color:var(--accent);width:18px;height:18px;margin:0;flex:none}
+.opt .l{flex:1;min-width:0}
+.opt .l b{display:block;font-weight:600}
+.opt .l span{font-size:13px;color:var(--muted)}
+.opt .r{font-weight:600;font-variant-numeric:tabular-nums}
+.sum{display:grid;grid-template-columns:1fr auto;gap:10px 0;font-size:14.5px;font-variant-numeric:tabular-nums}
+.sum .tot{font-weight:800;font-size:18px;padding-top:12px;border-top:1px solid var(--line)}
+.sum .tot+.tot{border:0;padding-top:12px}
+.sum span:nth-child(even){text-align:right;padding-left:12px}
+@media (max-width:560px){.filters{width:100%;display:grid;grid-template-columns:1fr 1fr}.filters .sel:last-child{grid-column:1/-1}}
+.demo{font-size:12.5px;color:var(--muted);text-align:center}
+
+/* orders / mine */
+.rows{display:flex;flex-direction:column;gap:10px}
+.row{display:flex;gap:14px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:12px;flex-wrap:wrap}
+.row img{width:60px;height:74px;border-radius:8px;object-fit:cover;flex:none;background:var(--soft)}
+.row .info{flex:1;min-width:150px}
+.row .info .t{font-weight:600}
+.row .info .s{font-size:13px;color:var(--muted)}
+.row .acts{display:flex;gap:8px;flex-wrap:wrap}
+.row .acts .btn{height:36px;padding:0 12px;font-size:13.5px}
+.status{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--soft);color:var(--muted)}
+.status.ok{background:var(--green-soft);color:var(--green)}
+.tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.tabs button{border:0;background:none;padding:10px 14px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button.on{color:var(--accent);border-color:var(--accent)}
+
+.done{text-align:center;max-width:520px;margin:50px auto 0;display:flex;flex-direction:column;gap:14px;align-items:center}
+.done .ok{width:64px;height:64px;border-radius:32px;background:var(--green-soft);display:grid;place-items:center}
+.done .ok svg{width:32px;height:32px;stroke:var(--green);fill:none;stroke-width:2.5}
+.done h1{font-family:var(--display);font-weight:800;font-size:30px;margin:0}
+
+footer{margin-top:64px;border-top:1px solid var(--line);background:var(--soft)}
+footer .wrap{padding-block:28px;display:flex;gap:16px 40px;flex-wrap:wrap;justify-content:space-between;font-size:13.5px;color:var(--muted)}
+footer .logo{font-size:22px}
+footer a:hover{color:var(--accent)}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:50;background:var(--ink);color:#fff;padding:12px 18px;border-radius:10px;font-weight:600;font-size:14px;max-width:calc(100% - 32px);box-shadow:0 6px 20px rgba(0,0,0,.2)}
+@media (prefers-reduced-motion:no-preference){.toast{animation:pop .2s ease-out}@keyframes pop{from{opacity:0;transform:translate(-50%,8px)}}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="wrap hdr-top">
+    <a class="logo" href="#/" aria-label="Aftur – forsíða">aftur<b>.</b></a>
+    <label class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="q" type="search" placeholder="Leita eftir vørum ella merkjum" aria-label="Leita">
+    </label>
+    <div class="hdr-actions">
+      <a class="icon-btn" href="#/favs" aria-label="Yndislisti"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-9-8.6C1.6 8.3 3.5 5 6.8 5c2 0 3.4 1.1 5.2 3 1.8-1.9 3.2-3 5.2-3 3.3 0 5.2 3.3 3.8 6.4C19 15.6 12 20 12 20z"/></svg><span class="n" id="favN" hidden></span></a>
+      <a class="icon-btn" href="#/me" aria-label="Mín síða"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></a>
+      <a class="btn btn-primary" href="#/sell"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="sell-txt">Sel nú</span></a>
+    </div>
+  </div>
+  <nav class="wrap cats" id="cats" aria-label="Bólkar"></nav>
+</header>
+
+<main class="wrap" id="app"></main>
+
+<footer>
+  <div class="wrap">
+    <div><div class="logo">aftur<b>.</b></div><div style="margin-top:6px;max-width:34ch">Føroyska keypitorgið fyri brúktar vørur. Gev tínum lutum eitt nýtt lív.</div></div>
+    <div style="display:flex;flex-direction:column;gap:6px"><b style="color:var(--ink)">Aftur</b><a href="#/how">Soleiðis virkar tað</a><a href="#/how">Keyparavernd</a></div>
+    <div style="display:flex;flex-direction:column;gap:6px"><b style="color:var(--ink)">Konta</b><a href="#/sell">Sel ein lut</a><a href="#/me">Mínar lýsingar</a><a href="#/me/orders">Mínir keyp</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ================= SETTINGS – broyt her ================= */
+const CONFIG = {
+  feeFixed: 5,          // keyparavernd: fast gjald í kr.
+  feePercent: 5,        // keyparavernd: % av prísinum
+  shipping: [
+    { id:"pickup", name:"Heinta hjá seljaranum", info:"Avtala tíð og stað við seljaran", price:0 },
+    { id:"post",   name:"Send við posti",        info:"2–4 arbeiðsdagar kring landið", price:59 },
+    { id:"parcel", name:"Pakkabox",              info:"Heinta tá tað hóskar tær",       price:45 }
+  ],
+  payments: [
+    { id:"mobilepay", name:"MobilePay" },
+    { id:"card",      name:"Gjaldskort" }
+  ]
+};
+/* ======================================================== */
+
+const CATS=[["klaedir","Klæðir"],["born","Børn"],["heim","Heim & hús"],["itrottur","Ítróttur & frílív"],["elektronikk","Elektronikk"],["farkostir","Bilar & bátar"],["bokur","Bøkur & spøl"],["annad","Annað"]];
+const CATNAME=Object.fromEntries(CATS);
+const LOCS=["Argir","Eiði","Fuglafjørður","Gøta","Hoyvík","Hvalvík","Klaksvík","Kollafjørður","Miðvágur","Nólsoy","Runavík","Saltangará","Sandur","Sørvágur","Tórshavn","Tvøroyri","Vágur","Vestmanna","Aðrastaðni"];
+const CONDS=["Nýtt við merki","Nýtt uttan merki","Sera gott","Gott","Nøktandi"];
+const STORE="aftur.v1";
+
+/* ---------- placeholder art for example items ---------- */
+const ART={
+ shirt:"M38 22l-16 9 6 13 10-4v40h24V40l10 4 6-13-16-9c-2 5-7 8-12 8s-10-3-12-8z",
+ jacket:"M38 20l-14 8-4 52h20V44M62 20l14 8 4 52H60V44M38 20c3 6 7 9 12 9s9-3 12-9M50 29v51M44 50h-4M60 50h-4",
+ sweater:"M36 22l-18 10-2 40h14l2-30v38h36V42l2 30h14l-2-40-18-10c-3 4-8 6-14 6s-11-2-14-6zM32 72h36",
+ dress:"M42 18v12l-6 8 -10 42h48L64 38l-6-8V18M42 30h16",
+ shoe:"M18 70V52l14-4 8-14h10l2 12c10 4 22 6 30 10v14zM18 64h64",
+ boot:"M34 18h22v34l18 8c6 3 8 8 8 14H34zM34 66h48",
+ bag:"M24 40h52l-4 40H28zM38 40v-8a12 12 0 0 1 24 0v8",
+ stroller:"M28 64a8 8 0 1 0 16 0 8 8 0 1 0-16 0M58 64a8 8 0 1 0 16 0 8 8 0 1 0-16 0M22 30h12l6 24h38l6-20H38",
+ toy:"M30 46a20 20 0 0 1 40 0v20a8 8 0 0 1-8 8H38a8 8 0 0 1-8-8zM28 30a8 8 0 1 0 12-6M72 30a8 8 0 1 1-12-6M43 52h0M57 52h0M45 62c3 3 7 3 10 0",
+ blocks:"M22 54h24v24H22zM54 54h24v24H54zM38 26h24v24H38z",
+ sofa:"M20 48v-10a6 6 0 0 1 6-6h48a6 6 0 0 1 6 6v10M14 50a6 6 0 0 1 12 0v8h48v-8a6 6 0 0 1 12 0v22H14zM20 72v6M80 72v6",
+ table:"M14 40h72M22 40v38M78 40v38M14 40l6-8h60l6 8",
+ lamp:"M36 20h28l10 26H26zM50 46v30M36 78h28",
+ chair:"M30 18h40v30H30zM26 48h48v8H26zM30 56v24M70 56v24",
+ plant:"M34 58h32l-4 22H38zM50 58V36M50 44c-10 0-16-8-16-18 10 0 16 8 16 18zM50 38c10 0 16-8 16-18-10 0-16 8-16 18z",
+ mountain:"M16 76l22-38 10 16 10-12 26 34zM38 38l5 8",
+ bike:"M14 62a14 14 0 1 0 28 0 14 14 0 1 0-28 0M58 62a14 14 0 1 0 28 0 14 14 0 1 0-28 0M28 62l12-24h22l10 24M40 38l10 24h8M36 30h10M62 38l-4-10h8",
+ tent:"M50 22L16 76h68zM50 22v54M40 76l10-20 10 20",
+ ski:"M30 18l8 62M56 18l8 62M24 40h20M50 40h20",
+ phone:"M34 18h32a4 4 0 0 1 4 4v56a4 4 0 0 1-4 4H34a4 4 0 0 1-4-4V22a4 4 0 0 1 4-4zM46 74h8",
+ laptop:"M24 26h52v36H24zM14 62h72l-4 10H18z",
+ headphones:"M24 62V50a26 26 0 0 1 52 0v12M18 58h12v20H18zM70 58h12v20H70z",
+ tv:"M16 24h68v44H16zM38 80h24M50 68v12",
+ boat:"M16 62h68l-10 16H26zM50 20v42M50 22l22 32H50",
+ car:"M16 64v-12l8-16h40l14 16h6v12zM28 64a7 7 0 1 0 14 0 7 7 0 1 0-14 0M60 64a7 7 0 1 0 14 0 7 7 0 1 0-14 0M30 36l-4 16h46",
+ motor:"M30 26h30v40H30zM38 26v-8h14v8M60 40h14M45 66v14M40 80h10",
+ book:"M20 26h22a8 8 0 0 1 8 8v46a6 6 0 0 0-6-6H20zM80 26H58a8 8 0 0 0-8 8v46a6 6 0 0 1 6-6h24z",
+ game:"M22 34h56v32H22zM34 44v12M28 50h12M62 46h0M70 54h0",
+ guitar:"M60 18l8 8M64 22L46 40M40 40a14 14 0 1 0 6 16l4-4a10 10 0 0 0-10-12zM36 60h0",
+ box:"M18 34l32-14 32 14v34L50 82 18 68zM18 34l32 14 32-14M50 48v34",
+ rod:"M20 80L76 18M76 18v40M70 62a6 6 0 1 0 12 0M28 78a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
+};
+const TINTS=["#dfe7f7","#f6e3dc","#e1efe6","#f3ecd8","#e9e2f3","#dcecef","#f5e1ea","#e6ecd9"];
+function art(icon,i){
+  const bg=TINTS[i%TINTS.length];
+  const s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 125"><rect width="100" height="125" fill="${bg}"/><g transform="translate(0 12)" fill="none" stroke="#1c46a8" stroke-opacity=".55" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="${ART[icon]||ART[CATICON[icon]]||ART.box}"/></g></svg>`;
+  return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(s);
+}
+const CATICON={klaedir:"shirt",born:"toy",heim:"sofa",itrottur:"mountain",elektronikk:"phone",farkostir:"boat",bokur:"book",annad:"box"};
+const day=86400000, now=Date.now();
+// [heiti, prísur, bólkur, stand, stødd, merki, stað, lýsing, seljari, tekning]
+const SEED=[
+ ["Regnjakki, vatntættur",450,"klaedir","Sera gott","M","66°North","Tórshavn","Lítið brúktur, ongar skaðar. Heldur væl í føroyska veðrinum.","Sunniva","jacket"],
+ ["Barnavogn við liggidel",1200,"born","Gott","","Emmaljunga","Klaksvík","Regnslag og innkeypsnet fylgja við. Nøkur merki av nýtslu.","Rúna","stroller"],
+ ["Handbundin ullartrøja",600,"klaedir","Nýtt uttan merki","L","","Gøta","Føroysk ull, bundin í fjør. Ov stór til mín.","Marjun","sweater"],
+ ["Fjallaskógvar",700,"itrottur","Sera gott","43","Meindl","Runavík","Gingnir eitt summar. Góðir til Slættaratind.","Jógvan","boot"],
+ ["iPhone 13, 128 GB",2400,"elektronikk","Gott","","Apple","Tórshavn","Battarí 86 %. Hylki og skíggjaverja fylgja við.","Óli","phone"],
+ ["Sofaborð í eik",350,"heim","Nøktandi","110 × 60 cm","","Vágur","Smáar ripur á plátuni. Verður at heinta.","Hanna","table"],
+ ["Gummistivlar til børn",120,"born","Sera gott","28","Viking","Hoyvík","Brúktir eina heyst.","Rúna","boot"],
+ ["Brætspøl – Catan",180,"bokur","Sum nýtt","","Kosmos","Miðvágur","Allar brikkir eru við. Spælt tvær ferðir.","Brandur","game"],
+ ["Útbordsmotorur 5 HK",3800,"farkostir","Gott","","Yamaha","Sandur","Tænaður í vár. Gongur væl.","Pætur","motor"],
+ ["Ullteppi",250,"heim","Sera gott","130 × 170 cm","Navia","Klaksvík","Gott í sofanum á kaldum kvøldum.","Marjun","box"],
+ ["Fjallaliggjari, 2 persónar",900,"itrottur","Gott","","Fjällräven","Eiði","Brúkt á Skúvoy og í Saksun. Teltpinnar og posi fylgja við.","Jógvan","tent"],
+ ["Súkkla, 28\"",1500,"itrottur","Gott","Ramma 54 cm","Trek","Tórshavn","21 gír. Nýggj kíkja í bakhjólinum.","Kári","bike"],
+ ["MacBook Air M1",4200,"elektronikk","Sera gott","13\"","Apple","Hoyvík","8 GB / 256 GB. Upprunalig hleðari fylgir við.","Óli","laptop"],
+ ["Hoyritól við ljóðsíu",650,"elektronikk","Sera gott","","Sony","Klaksvík","WH-1000XM4. Kassi og kapul fylgja við.","Eyð","headphones"],
+ ["Sjónvarp 55\"",2000,"elektronikk","Gott","55\"","Samsung","Fuglafjørður","4K, smart-TV. Fót og fjarstýring fylgja við.","Hanna","tv"],
+ ["Kjóli til veitslu",300,"klaedir","Nýtt við merki","38","Vero Moda","Runavík","Aldri brúktur. Keyptur til brúdleyp, men passaði ikki.","Sunniva","dress"],
+ ["Strikkaskógvar",400,"klaedir","Sera gott","40","Nike","Tvøroyri","Air Max. Gingnir fáar ferðir.","Brandur","shoe"],
+ ["Handtaska í leðri",550,"klaedir","Gott","","Mulberry","Tórshavn","Nakað slitin á hornunum, annars í góðum standi.","Marjun","bag"],
+ ["Lego – stór kassi",350,"born","Gott","Umleið 3 kg","Lego","Gøta","Blandaðir klossar. Vaskaðir.","Rúna","blocks"],
+ ["Mjúkdýr, bjørnur",60,"born","Sera gott","","","Sørvágur","Frá roykfríum heimi.","Elin","toy"],
+ ["Sofi, 3 persónar",2500,"heim","Gott","210 cm","Ilva","Argir","Grár sofi. Verður at heinta, hjálpi at bera.","Hanna","sofa"],
+ ["Gólvlampa",200,"heim","Sera gott","150 cm","IKEA","Vestmanna","Ljósperan fylgir við.","Elin","lamp"],
+ ["Spisistólar, 4 stk.",800,"heim","Gott","","","Kollafjørður","Í eik. Selt samlað.","Pætur","chair"],
+ ["Pottaplanta, monstera",150,"heim","Sera gott","Umleið 80 cm","","Tórshavn","Veksur skjótt. Pottur fylgir við.","Kári","plant"],
+ ["Toyota Yaris 2012",28000,"farkostir","Gott","","Toyota","Klaksvík","142.000 km. Nýggj dekk. Synað í ár.","Pætur","car"],
+ ["Snekkja, 18 fót",45000,"farkostir","Gott","18 fót","","Hvalvík","Træbátur við motori. Liggur í neystinum.","Brandur","boat"],
+ ["Føroysk orðabók",150,"bokur","Gott","","Sprotin","Miðvágur","Føroysk–donsk. Nakað brúkt.","Eyð","book"],
+ ["Gittari, akustiskur",900,"bokur","Sera gott","","Yamaha","Saltangará","Við posa og nýggjum strongjum.","Kári","guitar"],
+ ["Skíðir við bindingum",500,"itrottur","Nøktandi","170 cm","Atomic","Nólsoy","Skíðir brúktir í Noregi. Skógvar fylgja ikki við.","Eyð","ski"],
+ ["Veiðistong",300,"annad","Gott","2,7 m","Abu Garcia","Vágur","Við hjóli og nøkrum spinnarum.","Jógvan","rod"]
+].map((r,i)=>({id:"d"+(i+1),title:r[0],price:r[1],cat:r[2],cond:r[3],size:r[4],brand:r[5],loc:r[6],desc:r[7],seller:r[8],
+  photos:[art(r[9],i)],created:now-(i+1)*day*0.45,likes:(i*5+3)%17,status:"active",mine:false,demo:true}));
+
+/* ---------- storage ---------- */
+let S={listings:[],favs:[],orders:[],name:""};
+function load(){try{const r=JSON.parse(localStorage.getItem(STORE)||"null");if(r&&Array.isArray(r.listings))S=Object.assign(S,r)}catch(e){}}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(S));return true}catch(e){toast("Ikki meira pláss í kaganum. Strika gamlar lýsingar ella brúka færri myndir.");return false}}
+load();
+const allItems=()=>[...S.listings,...SEED.filter(d=>!S.orders.some(o=>o.itemId===d.id))];
+const find=id=>allItems().find(x=>x.id===id)||S.listings.find(x=>x.id===id)||SEED.find(x=>x.id===id);
+
+/* ---------- helpers ---------- */
+function h(tag,a,...kids){const e=document.createElement(tag);if(a)for(const k in a){const v=a[k];if(v==null||v===false)continue;if(k.slice(0,2)==="on")e.addEventListener(k.slice(2),v);else if(k==="class")e.className=v;else e.setAttribute(k,v===true?"":v)}for(const c of kids.flat(9)){if(c==null||c===false)continue;e.append(c.nodeType?c:document.createTextNode(String(c)))}return e}
+function ic(d,extra){const s=document.createElementNS("http://www.w3.org/2000/svg","svg");s.setAttribute("viewBox","0 0 24 24");if(extra)s.setAttribute("class",extra);d.split("|").forEach(p=>{const el=document.createElementNS(s.namespaceURI,"path");el.setAttribute("d",p);s.append(el)});return s}
+const I={heart:"M12 20s-7-4.4-9-8.6C1.6 8.3 3.5 5 6.8 5c2 0 3.4 1.1 5.2 3 1.8-1.9 3.2-3 5.2-3 3.3 0 5.2 3.3 3.8 6.4C19 15.6 12 20 12 20z",shield:"M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z|M8.5 12l2.5 2.5 4.5-5",check:"M5 12.5l4.5 4.5L19 7",cam:"M4 8h3l2-3h6l2 3h3v11H4z|M12 16a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",truck:"M3 6h11v10H3z|M14 10h4l3 3v3h-7|M7 19a2 2 0 1 0 0-.1M17 19a2 2 0 1 0 0-.1"};
+const kr=n=>(Math.round(n*100)/100).toLocaleString("da-DK",{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2})+" kr.";
+const fee=p=>Math.round((CONFIG.feeFixed+p*CONFIG.feePercent/100)*100)/100;
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function toast(m){document.querySelectorAll(".toast").forEach(t=>t.remove());const t=h("div",{class:"toast",role:"status"},m);document.body.append(t);setTimeout(()=>t.remove(),2800)}
+function ago(t){const d=Math.floor((Date.now()-t)/day);return d<1?"Í dag":d===1?"Í gjár":d+" dagar síðan"}
+function initials(n){return (n||"?").trim().split(/\s+/).map(w=>w[0]).slice(0,2).join("").toUpperCase()}
+function isFav(id){return S.favs.includes(id)}
+function toggleFav(id){S.favs=isFav(id)?S.favs.filter(x=>x!==id):[id,...S.favs];save();updateBadges()}
+function updateBadges(){const n=document.getElementById("favN");n.hidden=!S.favs.length;n.textContent=S.favs.length}
+
+/* ---------- state ---------- */
+let F={q:"",cat:"",loc:"",sort:"new",price:""};
+document.getElementById("q").addEventListener("input",e=>{F.q=e.target.value.trim().toLowerCase();if(!(PATH===""))go("#/");else route()});
+function buildCats(){
+  const c=document.getElementById("cats");c.replaceChildren();
+  [["","Alt"],...CATS].forEach(([k,n])=>c.append(h("button",{class:"cat"+(F.cat===k?" on":""),onclick(){F.cat=k;buildCats();if(!(PATH===""))go("#/");else route()}},n)));
+}
+
+/* ---------- card ---------- */
+function card(it){
+  const favBtn=h("button",{class:"fav"+(isFav(it.id)?" on":""),"aria-label":"Yndislisti",onclick(e){e.preventDefault();toggleFav(it.id);favBtn.classList.toggle("on");favBtn.lastChild.textContent=(it.likes||0)+(isFav(it.id)?1:0)}},ic(I.heart),String((it.likes||0)+(isFav(it.id)?1:0)));
+  return h("a",{class:"card",href:"#/item/"+it.id},
+    h("div",{class:"ph"},h("img",{src:it.photos[0]||art(CATICON[it.cat],0),alt:it.title,loading:"lazy"}),it.status==="sold"?h("span",{class:"tagpill"},"Selt"):it.demo?null:null,favBtn),
+    h("div",{class:"brand"},it.brand||CATNAME[it.cat]),
+    h("div",{class:"t"},[it.title,it.size].filter(Boolean).join(" · ")),
+    h("div",{class:"p"},kr(it.price)),
+    h("div",{class:"pp"},kr(it.price+fee(it.price))," við",ic(I.shield))
+  );
+}
+
+/* ---------- views ---------- */
+function vHome(app){
+  const items=allItems().filter(it=>it.status!=="sold");
+  if(!F.q&&!F.cat){
+    const pics=items.slice(0,3).map(i=>i.photos[0]);
+    app.append(h("section",{class:"hero"},
+      h("div",{class:"hero-txt"},
+        h("h1",null,"Gev tínum lutum eitt nýtt lív"),
+        h("p",null,"Sel tað, tú ikki brúkar longur, og finn góð keyp frá fólki kring alt landið. Tað kostar einki at leggja út."),
+        h("div",{class:"hero-btns"},h("a",{class:"btn btn-primary",href:"#/sell"},"Byrja at selja"),h("a",{class:"btn btn-outline",href:"#/how"},"Soleiðis virkar tað")),
+        h("div",{class:"trust"},h("span",null,ic(I.shield),"Keyparavernd"),h("span",null,ic(I.truck),"Heinta ella fá sent"),h("span",null,ic(I.check),"Ókeypis at selja"))),
+      h("div",{class:"hero-art","aria-hidden":"true"},pics.map(p=>h("div",{style:`background-image:url("${p}")`})))
+    ));
+  }
+  let list=items.filter(it=>(!F.cat||it.cat===F.cat)&&(!F.loc||it.loc===F.loc)&&(!F.q||[it.title,it.brand,it.desc,it.size,CATNAME[it.cat]].join(" ").toLowerCase().includes(F.q)));
+  if(F.price){const [lo,hi]=F.price.split("-").map(Number);list=list.filter(it=>it.price>=lo&&(!hi||it.price<=hi))}
+  list.sort(F.sort==="low"?(a,b)=>a.price-b.price:F.sort==="high"?(a,b)=>b.price-a.price:(a,b)=>b.created-a.created);
+  const mk=(k,opts)=>{const s=h("select",{class:"sel","aria-label":k,onchange(){F[k]=s.value;route()}},opts.map(([v,n])=>h("option",{value:v},n)));s.value=F[k];return s};
+  app.append(h("div",{class:"feed-head"},
+    h("h2",null,F.q?`Úrslit fyri “${F.q}”`:F.cat?CATNAME[F.cat]:"Nýtt í dag",h("span",{class:"count"},list.length+" lutir")),
+    h("div",{class:"filters"},
+      mk("loc",[["","Allar Føroyar"],...LOCS.map(l=>[l,l])]),
+      mk("price",[["","Allir prísir"],["0-100","Undir 100 kr."],["100-500","100–500 kr."],["500-2000","500–2.000 kr."],["2000-","Yvir 2.000 kr."]]),
+      mk("sort",[["new","Nýggjast"],["low","Prísur: lægst fyrst"],["high","Prísur: hægst fyrst"]]))));
+  if(!list.length){app.append(h("div",{class:"empty"},h("strong",null,"Einki funnið"),"Royn eitt annað leitorð ella tak filtrini av."));return}
+  app.append(h("div",{class:"grid"},list.map(card)));
+}
+
+function vItem(app,id){
+  const it=find(id);
+  if(!it){app.append(h("div",{class:"empty"},h("strong",null,"Lýsingin finst ikki"),"Hon kann vera strikað ella seld.",h("br"),h("a",{class:"btn btn-primary",href:"#/"},"Aftur til forsíðuna")));return}
+  const mainImg=h("img",{src:it.photos[0]||art(CATICON[it.cat],0),alt:it.title});
+  const thumbs=it.photos.length>1?h("div",{class:"thumbs"},it.photos.map((p,i)=>{const b=h("button",{class:i?"":"on","aria-label":"Mynd "+(i+1),onclick(){mainImg.src=p;thumbs.querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on")}},h("img",{src:p,alt:""}));return b})):null;
+  const sold=it.status==="sold";
+  const favB=h("button",{class:"btn btn-ghost btn-block",onclick(){toggleFav(it.id);favB.lastChild.textContent=isFav(it.id)?"Á yndislistanum":"Legg á yndislista";favB.querySelector("svg").style.fill=isFav(it.id)?"var(--red)":"none"}},ic(I.heart),isFav(it.id)?"Á yndislistanum":"Legg á yndislista");
+  const fs=favB.querySelector("svg");fs.setAttribute("width","18");fs.setAttribute("height","18");fs.style.stroke="var(--red)";fs.style.strokeWidth="2";fs.style.fill=isFav(it.id)?"var(--red)":"none";
+  app.append(
+    h("div",{class:"crumbs"},h("a",{href:"#/"},"Forsíða"),"/",h("a",{href:"#/",onclick(){F.cat=it.cat;buildCats()}},CATNAME[it.cat]),"/",h("span",null,it.title)),
+    h("div",{class:"item"},
+      h("div",{class:"gallery"},h("div",{class:"main"},mainImg),thumbs),
+      h("aside",{class:"panel"},
+        h("div",null,h("div",{class:"price"},kr(it.price)),h("div",{class:"withfee"},kr(it.price+fee(it.price))," við keyparavernd",ic(I.shield))),
+        h("h1",null,it.title),
+        h("dl",{class:"specs"},
+          it.brand?[h("dt",null,"Merki"),h("dd",null,it.brand)]:null,
+          it.size?[h("dt",null,"Stødd"),h("dd",null,it.size)]:null,
+          h("dt",null,"Stand"),h("dd",null,it.cond||"–"),
+          h("dt",null,"Bólkur"),h("dd",null,CATNAME[it.cat]),
+          h("dt",null,"Stað"),h("dd",null,it.loc),
+          h("dt",null,"Lagt út"),h("dd",null,ago(it.created))),
+        it.desc?h("div",{class:"desc"},it.desc):null,
+        sold?h("div",{class:"note"},"Hesin luturin er seldur."):
+        it.mine?h("div",{class:"note blue"},"Hetta er tín lýsing. ",h("a",{href:"#/me",style:"text-decoration:underline"},"Stýr henni á tíni síðu.")):
+        [h("a",{class:"btn btn-primary btn-block",href:"#/buy/"+it.id},"Keyp nú"),favB],
+        h("div",{class:"protect"},ic(I.shield),h("div",null,h("b",{style:"color:var(--ink)"},"Keyparavernd. "),"Fært tú ikki lutin, ella er hann ikki sum lýst, fært tú pengarnar aftur.")),
+        h("div",{class:"seller"},h("div",{class:"avatar"},initials(it.seller)),h("div",null,h("div",{class:"nm"},it.mine?"Tú":it.seller),h("div",{class:"sub"},it.loc))))
+    ));
+  const more=allItems().filter(x=>x.cat===it.cat&&x.id!==it.id&&x.status!=="sold").slice(0,5);
+  if(more.length)app.append(h("section",{class:"more"},h("div",{class:"feed-head"},h("h2",null,"Líknandi lutir")),h("div",{class:"grid"},more.map(card))));
+}
+
+/* ---------- sell ---------- */
+let D=null;
+function blank(){return{title:"",price:"",cat:"",cond:"",size:"",brand:"",loc:"",desc:"",seller:S.name||"",photos:[],busy:0,err:{}}}
+function vSell(app){
+  if(!D)D=blank();
+  const bind=(el,k)=>{el.value=D[k];el.id="f-"+k;const u=()=>{D[k]=el.value};el.addEventListener("input",u);el.addEventListener("change",u);return el};
+  const fld=(k,label,el,hint)=>h("div",{class:"field"},h("label",{for:"f-"+k},label),bind(el,k),hint?h("div",{class:"hint"},hint):null,D.err[k]?h("div",{class:"err"},D.err[k]):null);
+  const sel=(opts,ph)=>h("select",{class:"inp"},h("option",{value:""},ph),opts.map(o=>Array.isArray(o)?h("option",{value:o[0]},o[1]):h("option",{value:o},o)));
+  const file=h("input",{type:"file",accept:"image/*",multiple:true,hidden:true,onchange(e){addPhotos([...e.target.files]);e.target.value=""}});
+  const ph=h("div",{class:"photos"},
+    D.photos.map((p,i)=>h("div",{class:"ph"},h("img",{src:p,alt:"Mynd "+(i+1)}),i===0?h("span",{class:"first"},"Forsíða"):null,h("button",{class:"x",type:"button","aria-label":"Tak mynd burtur",onclick(){D.photos.splice(i,1);route()}},"×"))),
+    Array.from({length:D.busy},()=>h("div",{class:"ph",style:"display:grid;place-items:center;color:var(--muted)"},"…")),
+    D.photos.length+D.busy<5?h("button",{type:"button",class:"addph",onclick(){file.click()}},ic(I.cam),"Legg mynd afturat"):null);
+  app.append(h("form",{class:"page",novalidate:true,onsubmit(e){e.preventDefault();publish()}},
+    h("h1",null,"Sel ein lut"),
+    h("div",{class:"box"},h("h3",null,"Myndir"),ph,file,h("div",{class:"hint",style:"font-size:13px;color:var(--muted)"},"Upp til 5 myndir. Góðar myndir í dagsljósi selja skjótari."),D.err.photos?h("div",{class:"err",style:"color:var(--red);font-size:13px;font-weight:600"},D.err.photos):null),
+    h("div",{class:"box"},
+      fld("title","Heiti",h("input",{class:"inp",maxlength:70,placeholder:"t.d. Regnjakki frá 66°North"})),
+      fld("desc","Lýsing",h("textarea",{class:"inp",maxlength:1500,placeholder:"Hvussu er standurin? Er nakað at merkja? Hví selur tú?"}))),
+    h("div",{class:"box"},
+      h("div",{class:"two"},fld("cat","Bólkur",sel(CATS,"Vel bólk")),fld("cond","Stand",sel(CONDS,"Vel stand"))),
+      h("div",{class:"two"},fld("brand","Merki",h("input",{class:"inp",maxlength:40,placeholder:"Valfrítt"})),fld("size","Stødd",h("input",{class:"inp",maxlength:30,placeholder:"t.d. M, 38, 120 cm"})))),
+    h("div",{class:"box"},
+      h("div",{class:"two"},fld("price","Prísur (kr.)",h("input",{class:"inp",type:"number",min:1,step:1,inputmode:"numeric",placeholder:"0"}),"Keyparin rindar keyparavernd afturat. Tú fært allan prísin."),fld("loc","Stað",sel(LOCS,"Hvar er luturin?"))),
+      fld("seller","Títt navn",h("input",{class:"inp",maxlength:40,placeholder:"t.d. Jógvan"}))),
+    h("button",{class:"btn btn-primary btn-block",type:"submit",disabled:D.busy>0},D.busy?"Viðgert myndir…":"Legg út")));
+}
+async function shrink(f){
+  const url=URL.createObjectURL(f);
+  try{
+    const img=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=url});
+    const m=1000,s=Math.min(1,m/Math.max(img.naturalWidth,img.naturalHeight));
+    const c=document.createElement("canvas");c.width=Math.round(img.naturalWidth*s);c.height=Math.round(img.naturalHeight*s);
+    c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+    return c.toDataURL("image/jpeg",.78);
+  }finally{URL.revokeObjectURL(url)}
+}
+async function addPhotos(files){
+  files=files.slice(0,5-D.photos.length-D.busy);
+  for(const f of files){D.busy++;route();try{D.photos.push(await shrink(f))}catch(e){toast("Myndin kundi ikki lesast. Royn ein JPG ella PNG.")}D.busy--;if(PATH==="sell")route()}
+}
+function publish(){
+  const e={};
+  if(!D.photos.length)e.photos="Legg í minsta lagi eina mynd afturat.";
+  if(D.title.trim().length<3)e.title="Skriva eitt heiti.";
+  if(!D.cat)e.cat="Vel ein bólk.";
+  if(!D.cond)e.cond="Vel stand.";
+  if(!(Number(D.price)>=1))e.price="Skriva ein prís, minst 1 kr.";
+  if(!D.loc)e.loc="Vel eitt stað.";
+  if(D.seller.trim().length<2)e.seller="Skriva títt navn.";
+  D.err=e;
+  if(Object.keys(e).length){route();toast("Okkurt manglar. Hygg eftir reyðu teksunum.");return}
+  const it={id:uid(),title:D.title.trim(),price:Math.round(Number(D.price)),cat:D.cat,cond:D.cond,size:D.size.trim(),brand:D.brand.trim(),loc:D.loc,desc:D.desc.trim(),seller:D.seller.trim(),photos:D.photos.slice(),created:Date.now(),likes:0,status:"active",mine:true};
+  S.name=it.seller;S.listings.unshift(it);
+  if(!save()){S.listings.shift();return}
+  D=null;toast("Lýsingin er løgd út");go("#/item/"+it.id);
+}
+
+/* ---------- buy ---------- */
+let B=null;
+function vBuy(app,id){
+  const it=find(id);
+  if(!it||it.status==="sold"||it.mine){go("#/item/"+id);return}
+  if(!B||B.id!==id)B={id,ship:"pickup",pay:"mobilepay",name:S.buyer?.name||"",addr:S.buyer?.addr||"",zip:S.buyer?.zip||"",phone:S.buyer?.phone||"",err:{}};
+  const ship=CONFIG.shipping.find(s=>s.id===B.ship);
+  const total=it.price+fee(it.price)+ship.price;
+  const inp=(k,label,a)=>{const el=h("input",Object.assign({class:"inp",id:"b-"+k},a||{}));el.value=B[k];el.addEventListener("input",()=>B[k]=el.value);return h("div",{class:"field"},h("label",{for:"b-"+k},label),el,B.err[k]?h("div",{class:"err"},B.err[k]):null)};
+  const radio=(group,o,right)=>{const r=h("input",{type:"radio",name:group,value:o.id,onchange(){B[group]=o.id;route()}});r.checked=B[group]===o.id;return h("label",{class:"opt"},r,h("span",{class:"l"},h("b",null,o.name),o.info?h("span",null,o.info):null),right!=null?h("span",{class:"r"},right):null)};
+  const needAddr=B.ship!=="pickup";
+  app.append(h("div",{class:"co"},
+    h("h1",null,"Gjalding"),
+    h("div",null,
+      h("div",{class:"box"},h("div",{class:"mini"},h("img",{src:it.photos[0],alt:""}),h("div",null,h("div",{class:"t"},it.title),h("div",{class:"s"},[it.size,it.cond,it.loc].filter(Boolean).join(" · ")),h("div",{style:"font-weight:700;margin-top:2px"},kr(it.price))))),
+      h("div",{class:"box"},h("h3",null,"Levering"),CONFIG.shipping.map(s=>radio("ship",s,s.price?kr(s.price):"Ókeypis"))),
+      h("div",{class:"box"},h("h3",null,needAddr?"Hvar skal tað sendast?":"Tínar upplýsingar"),
+        inp("name","Fulla navn",{autocomplete:"name"}),
+        needAddr?inp("addr","Adressa",{autocomplete:"street-address"}):null,
+        needAddr?inp("zip","Postnummar og bygd",{placeholder:"t.d. 100 Tórshavn"}):null,
+        inp("phone","Telefonnummar",{type:"tel",autocomplete:"tel",inputmode:"tel",placeholder:"t.d. 21 23 45"})),
+      h("div",{class:"box"},h("h3",null,"Gjaldingarháttur"),CONFIG.payments.map(p=>radio("pay",p,null)))),
+    h("aside",{class:"panel",style:"top:130px"},
+      h("h3",{style:"margin:0;font-size:16px"},"Samandráttur"),
+      h("div",{class:"sum"},
+        h("span",null,"Luturin"),h("span",null,kr(it.price)),
+        h("span",null,`Keyparavernd (${CONFIG.feeFixed} kr. + ${CONFIG.feePercent} %)`),h("span",null,kr(fee(it.price))),
+        h("span",null,"Levering"),h("span",null,ship.price?kr(ship.price):"Ókeypis"),
+        h("span",{class:"tot"},"Íalt"),h("span",{class:"tot"},kr(total))),
+      h("button",{class:"btn btn-primary btn-block",onclick(){pay(it,total,ship)}},"Rinda "+kr(total)),
+      h("div",{class:"protect"},ic(I.shield),h("div",null,"Pengarnir verða hildnir, til tú hevur váttað, at luturin er sum lýst.")),
+      h("div",{class:"demo"},"Royndarútgáva: ongin pengur verður drigin enn."))
+  ));
+}
+function pay(it,total,ship){
+  const e={};
+  if(B.name.trim().length<2)e.name="Skriva títt navn.";
+  if(B.ship!=="pickup"&&B.addr.trim().length<3)e.addr="Skriva adressuna.";
+  if(B.ship!=="pickup"&&B.zip.trim().length<3)e.zip="Skriva postnummar og bygd.";
+  if(B.phone.replace(/\D/g,"").length<6)e.phone="Skriva eitt telefonnummar.";
+  B.err=e;if(Object.keys(e).length){route();return}
+  const o={id:uid(),itemId:it.id,title:it.title,photo:it.photos[0],seller:it.seller,price:it.price,fee:fee(it.price),ship:ship.name,shipPrice:ship.price,total,pay:CONFIG.payments.find(p=>p.id===B.pay).name,buyer:{name:B.name.trim(),addr:B.addr.trim(),zip:B.zip.trim(),phone:B.phone.trim()},created:Date.now(),status:"paid"};
+  S.buyer=o.buyer;S.orders.unshift(o);
+  const mine=S.listings.find(x=>x.id===it.id);if(mine)mine.status="sold";
+  save();B=null;go("#/order/"+o.id);
+}
+function vOrder(app,id){
+  const o=S.orders.find(x=>x.id===id);
+  if(!o){go("#/me/orders");return}
+  app.append(h("div",{class:"done"},
+    h("div",{class:"ok"},ic(I.check)),
+    h("h1",null,"Takk fyri keypið!"),
+    h("p",{style:"margin:0;color:var(--muted)"},`Tú hevur keypt “${o.title}” frá ${o.seller}. ${o.shipPrice?"Seljarin sendir lutin so skjótt sum gjørligt.":"Seljarin setir seg í samband við teg at avtala heinting."}`),
+    h("div",{class:"box",style:"width:100%;text-align:left"},
+      h("div",{class:"mini"},h("img",{src:o.photo,alt:""}),h("div",null,h("div",{class:"t"},o.title),h("div",{class:"s"},o.ship+" · "+o.pay))),
+      h("div",{class:"sum"},h("span",null,"Luturin"),h("span",null,kr(o.price)),h("span",null,"Keyparavernd"),h("span",null,kr(o.fee)),h("span",null,"Levering"),h("span",null,o.shipPrice?kr(o.shipPrice):"Ókeypis"),h("span",{class:"tot"},"Íalt"),h("span",{class:"tot"},kr(o.total)))),
+    h("div",{style:"display:flex;gap:10px;flex-wrap:wrap;justify-content:center"},h("a",{class:"btn btn-primary",href:"#/me/orders"},"Síggj mínir keyp"),h("a",{class:"btn btn-ghost",href:"#/"},"Hald fram at keypa"))));
+}
+
+/* ---------- favs / me ---------- */
+function vFavs(app){
+  app.append(h("div",{class:"feed-head"},h("h2",null,"Yndislisti",h("span",{class:"count"},S.favs.length+" lutir"))));
+  const list=S.favs.map(find).filter(Boolean);
+  if(!list.length){app.append(h("div",{class:"empty"},h("strong",null,"Einki á yndislistanum enn"),"Trýst á hjartað á einum luti fyri at goyma hann her.",h("br"),h("a",{class:"btn btn-primary",href:"#/"},"Finn nakað")));return}
+  app.append(h("div",{class:"grid"},list.map(card)));
+}
+function vMe(app,tab){
+  tab=tab||"listings";
+  app.append(h("div",{class:"page",style:"max-width:860px"},
+    h("h1",null,S.name?"Hey, "+S.name:"Mín síða"),
+    h("div",{class:"tabs"},
+      h("button",{class:tab==="listings"?"on":"",onclick(){go("#/me")}},"Mínar lýsingar ("+S.listings.length+")"),
+      h("button",{class:tab==="orders"?"on":"",onclick(){go("#/me/orders")}},"Mínir keyp ("+S.orders.length+")")),
+    tab==="orders"?orders():listings()));
+  function listings(){
+    if(!S.listings.length)return h("div",{class:"empty"},h("strong",null,"Tú hevur einki til sølu"),"Tað tekur bert eina løtu at leggja ein lut út.",h("br"),h("a",{class:"btn btn-primary",href:"#/sell"},"Sel ein lut"));
+    return h("div",{class:"rows"},S.listings.map(it=>{
+      let sure=false;
+      const del=h("button",{class:"btn btn-ghost",onclick(){if(!sure){sure=true;del.textContent="Ja, strika";del.className="btn btn-danger";return}S.listings=S.listings.filter(x=>x.id!==it.id);S.favs=S.favs.filter(x=>x!==it.id);save();toast("Lýsingin er strikað");route()}},"Strika");
+      return h("div",{class:"row"},h("img",{src:it.photos[0],alt:""}),
+        h("a",{class:"info",href:"#/item/"+it.id},h("div",{class:"t"},it.title),h("div",{class:"s"},kr(it.price)+" · "+ago(it.created))," ",h("span",{class:"status"+(it.status==="sold"?" ok":"")},it.status==="sold"?"Seldur":"Til sølu")),
+        h("div",{class:"acts"},
+          h("button",{class:"btn btn-ghost",onclick(){it.status=it.status==="sold"?"active":"sold";save();route()}},it.status==="sold"?"Set til sølu aftur":"Merk sum seldan"),del));
+    }));
+  }
+  function orders(){
+    if(!S.orders.length)return h("div",{class:"empty"},h("strong",null,"Eingir keyp enn"),"Tá ið tú keypir okkurt, sært tú tað her.",h("br"),h("a",{class:"btn btn-primary",href:"#/"},"Finn nakað"));
+    return h("div",{class:"rows"},S.orders.map(o=>h("div",{class:"row"},h("img",{src:o.photo,alt:""}),
+      h("div",{class:"info"},h("div",{class:"t"},o.title),h("div",{class:"s"},`${kr(o.total)} · ${o.ship} · ${new Date(o.created).toLocaleDateString("da-DK")}`)," ",h("span",{class:"status"+(o.status==="received"?" ok":"")},o.status==="received"?"Móttikið":"Goldið")),
+      o.status==="received"?null:h("div",{class:"acts"},h("button",{class:"btn btn-outline",onclick(){o.status="received";save();toast("Takk! Seljarin fær nú pengarnar.");route()}},"Eg havi fingið lutin")))));
+  }
+}
+function vHow(app){
+  const step=(n,t,d)=>h("div",{class:"box",style:"flex-direction:row;gap:16px;align-items:flex-start"},h("div",{class:"avatar",style:"font-family:var(--display)"},n),h("div",null,h("h3",{style:"margin:0 0 4px"},t),h("div",{style:"color:var(--muted)"},d)));
+  app.append(h("div",{class:"page"},
+    h("h1",null,"Soleiðis virkar Aftur"),
+    h("h2",{style:"margin:8px 0 12px"},"Tá ið tú selur"),
+    step("1","Tak myndir og legg út","Tað er ókeypis at leggja út. Skriva eina ærliga lýsing og set ein prís."),
+    step("2","Ein keypir","Tú fært boð, tá ið luturin er seldur. Send hann ella avtala heinting."),
+    step("3","Fá pengarnar","Tá ið keyparin hevur váttað, at alt er í lagi, fært tú allan prísin."),
+    h("h2",{style:"margin:24px 0 12px"},"Tá ið tú keypir"),
+    step("1","Finn og keyp","Leita, filtrera eftir bólki og stað, og trýst á “Keyp nú”."),
+    step("2","Keyparavernd",`Fyri ${CONFIG.feeFixed} kr. + ${CONFIG.feePercent} % av prísinum verða pengarnir hildnir, til tú hevur fingið lutin. Er hann ikki sum lýst, fært tú pengarnar aftur.`),
+    step("3","Vátta móttøku","Tá ið alt er í lagi, váttar tú á tíni síðu, og seljarin fær pengarnar.")));
+}
+
+/* ---------- router ---------- */
+let PATH=(location.hash||"").replace(/^#\/?/,"");
+function go(href){
+  PATH=String(href).replace(/^#\/?/,"");
+  try{history.pushState(null,"","#/"+PATH)}catch(e){}
+  route();
+}
+document.addEventListener("click",e=>{
+  const a=e.target.closest&&e.target.closest('a[href^="#"]');
+  if(!a||e.defaultPrevented||e.metaKey||e.ctrlKey||e.shiftKey)return;
+  e.preventDefault();go(a.getAttribute("href"));
+});
+let LAST=null;
+function route(){
+  const app=document.getElementById("app");
+  const p=PATH.split("/");
+  const keepScroll=LAST===PATH;LAST=PATH;
+  const y=window.scrollY;
+  app.replaceChildren();
+  document.getElementById("cats").hidden=!["","item"].includes(p[0]);
+  if(p[0]==="item")vItem(app,p[1]);
+  else if(p[0]==="sell")vSell(app);
+  else if(p[0]==="buy")vBuy(app,p[1]);
+  else if(p[0]==="order")vOrder(app,p[1]);
+  else if(p[0]==="favs")vFavs(app);
+  else if(p[0]==="me")vMe(app,p[1]);
+  else if(p[0]==="how")vHow(app);
+  else vHome(app);
+  updateBadges();
+  window.scrollTo(0,keepScroll?y:0);
+}
+window.addEventListener("popstate",()=>{PATH=(location.hash||"").replace(/^#\/?/,"");route()});
+window.addEventListener("hashchange",()=>{const n=(location.hash||"").replace(/^#\/?/,"");if(n!==PATH){PATH=n;route()}});
+buildCats();route();
+})();
+</script>
+</body>
+</html>
